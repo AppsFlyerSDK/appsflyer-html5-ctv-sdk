@@ -1,4 +1,4 @@
-<img src="https://github.com/AppsFlyerSDK/appsflyer-html5-ctv-sdk/blob/master/images/CTV.png"  width="400" > 
+<img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/CTV.png?raw=true"  width="400" > 
 
 # appsflyer-html5-ctv-sdk
 
@@ -12,8 +12,8 @@
 
 ### <a id="plugin-build-for"> This SDK is built for
 
-- <img src="https://github.com/AppsFlyerSDK/appsflyer-html5-ctv-sdk/blob/master/images/tizen.png" alt="drawing" width="15"/> Samsung Tizen
-- <img src="https://github.com/AppsFlyerSDK/appsflyer-html5-ctv-sdk/blob/master/images/lg.png" alt="drawing" width="15"/> LG Webos
+- <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/tizen.png?raw=true" alt="drawing" width="15"/> Samsung Tizen
+- <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/lg.png?raw=true" alt="drawing" width="15"/> LG Webos
 
  ##  📖 Guides
 - [Adding the SDK to your project](#installation)
@@ -198,4 +198,4 @@ Open and run the following directory from your emulator/simulator or real device
 appsflyer-html5-ctv-sdk/example/app
 ```
 
-![demo printscreen](https://github.com/AppsFlyerSDK/appsflyer-html5-ctv-sdk/blob/master/images/demo.png)
+![demo printscreen](https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/demo.png?raw=true)
