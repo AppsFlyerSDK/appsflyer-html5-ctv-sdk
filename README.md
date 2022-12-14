@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/CTV.png"  width="400" > 
+<img src="https://raw.githubusercontent.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/main/images/CTV.png"  width="400" > 
 
 # appsflyer-html5-ctv-sdk
 
