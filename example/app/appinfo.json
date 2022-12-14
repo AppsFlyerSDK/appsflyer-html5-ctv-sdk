@@ -1,0 +1,10 @@
+{
+  "id": "com.appsflyer.lgdemoapp",
+  "version": "0.0.1",
+  "vendor": "AppsFlyer",
+  "type": "web",
+  "main": "index.html",
+  "title": "LG-AppsFlyerSDK-Demo-App",
+  "icon": "icon.png",
+  "largeIcon": "icon.png"
+}
