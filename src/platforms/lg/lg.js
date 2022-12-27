@@ -2,7 +2,7 @@ import {PlatformPayload} from '../platformPayload.js';
 import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from '../types/constants.js';
 import {DeviceIds, Platform} from '../types/types.js';
 
-class AppsFlyerLGSDK {
+class LGPlatform {
   constructor(){
     this.platformLogs = [];
   }
@@ -111,4 +111,4 @@ class AppsFlyerLGSDK {
   }
 }
 
-export default AppsFlyerLGSDK;
+export default LGPlatform;
