@@ -1,6 +1,8 @@
 import AppsFlyerCore from './core/AppsFlyerCore.js';
-import AppsFlyerSamsungSDK from './platforms/samsung/samsung.js';
-import AppsFlyerLGSDK from './platforms/lg/lg.js';
+import SamsungPlatform from './platforms/samsung/samsung.js';
+import LGPlatform from './platforms/lg/lg.js';
+import CustomPlatform from './platforms/custom/custom.js';
+import { Platform } from './platforms/types/types.js';
 
 class AppsFlyerSDK {
   constructor() {
@@ -12,9 +14,13 @@ class AppsFlyerSDK {
     let platformInstance;
     if (platformInstance === undefined) {
       if (typeof tizen != 'undefined' && tizen.application) {
-        platformInstance = new AppsFlyerSamsungSDK();
+        platformInstance = new SamsungPlatform();
       } else if (typeof webOS != 'undefined' && webOS.fetchAppInfo && webOS.platform.tv) {
-        platformInstance = new AppsFlyerLGSDK();
+        platformInstance = new LGPlatform();
+      } else if(typeof VIZIO != 'undefined'){
+        platformInstance = new CustomPlatform(Platform.Smartcast);
+      } else if(typeof VIDAA != 'undefined'){
+        platformInstance = new CustomPlatform(Platform.Vidaa);
       } else {
         platformInstance = null;
         console.error("No platform found");
@@ -24,15 +30,15 @@ class AppsFlyerSDK {
   }
 
   async init(config) {
+    let platformPayload, platformLogs;
     if(this.platformInstance){
-      let platformPayload, platformLogs;
       try{
         platformPayload = await this.platformInstance.getPlatformPayload();
         platformLogs = this.platformInstance.getPlatformLogs();
       } catch (error){
         platformLogs.push(error)
       }
-      
+
       try{
         await this.appsflyerInstance.init(config, platformPayload, platformLogs);
       } catch (error){
@@ -40,8 +46,9 @@ class AppsFlyerSDK {
       } 
     } else {
       console.error("Init failed: No platform found");
-    }   
+    }  
   }
+
   start() {   
     return this.appsflyerInstance.start();
   }

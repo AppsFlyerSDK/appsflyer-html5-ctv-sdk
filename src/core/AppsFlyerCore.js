@@ -3,7 +3,7 @@ import {Logger} from './utils/logger.js';
 import {Auth} from './internal/auth/utils.js';
 import {Requests} from './internal/http/requests.js';
 import {LocalStorage} from './internal/storage/storage.js';
-import {APPSFLYER_INITIZALIZED, APPSFLYER_PREDEFINED_EVENTS, APPSFLYER_PREDEFINED_EVENTS_ARR, INVALID_APP_ID, INVALID_DEV_KEY, LOG_EVENT, START, CUSTOMER_USER_ID} from './utils/constants.js';
+import {APPSFLYER_INITIZALIZED, APPSFLYER_PREDEFINED_EVENTS, APPSFLYER_PREDEFINED_EVENTS_ARR, INVALID_APP_ID, INVALID_DEV_KEY, LOG_EVENT, START, CUSTOMER_USER_ID, DEVICE_ID} from './utils/constants.js';
 
 // AppsFlyerCore constructor and setters methods
 class AppsFlyerCore {
@@ -25,9 +25,15 @@ class AppsFlyerCore {
     this.setPayload = function(payload) {
       this.payload = payload;
     };
-    this.setCustomPayload = function(payload) {
+    this.setCustomPayload = function(payload) {   
       Object.keys(payload).forEach((key) => {
-        if(!this.payload.hasOwnProperty(key)){
+        if(key == DEVICE_ID){
+          this.payload.device_ids.forEach(device_id => {
+            if(device_id.value == ""){
+              device_id.value = payload[key];
+            }
+          });    
+        }else{
           this.payload[key] = payload[key];
         }
       })
@@ -53,8 +59,8 @@ class AppsFlyerCore {
         appsFlyerID = this.utils.generateUUIDv4();
       }
       this.appsFlyerID = appsFlyerID;
-
-      this.payload.device_ids.push({type: 'custom', value: appsFlyerID});
+      this.payload.appsflyer_id = appsFlyerID;
+      // this.payload.device_ids.push({type: 'custom', value: appsFlyerID});
     };   
 
     this.setSessionCount = function setSessionCount() {
@@ -122,7 +128,6 @@ class AppsFlyerCore {
       this.appsFlyerOptions.isSandbox = isSandbox;
 
       this.requests = new Requests(this.utils, this.logger, this.auth, this.storage, isSandbox);
-
       this.setPayload(platformPayload.payload);
       this.setPlatform(platformPayload.platform);
       this.setAppsFlyerID();

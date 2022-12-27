@@ -10,3 +10,9 @@ export const LG_CONFIG = {
     isDebug: true,    
     isSandbox: false
 }
+export const CUSTOM_CONFIG = {
+    devKey: "pJtNoWRvepn9EBtYG4jAUQ",
+    appId: "12345678",
+    isDebug: true,    
+    isSandbox: false
+}

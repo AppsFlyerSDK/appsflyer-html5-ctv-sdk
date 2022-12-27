@@ -2,7 +2,7 @@ import {PlatformPayload} from '../platformPayload.js';
 import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from '../types/constants.js';
 import {DeviceIds, Platform} from '../types/types.js';
 
-class AppsFlyerSamsungSDK {
+class SamsungPlatform {
   constructor(){
     this.platformLogs = [];
   }
@@ -70,4 +70,4 @@ class AppsFlyerSamsungSDK {
   }
 }
 
-export default AppsFlyerSamsungSDK;
+export default SamsungPlatform;
