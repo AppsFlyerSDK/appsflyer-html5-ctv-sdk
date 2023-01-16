@@ -59,8 +59,8 @@ class AppsFlyerCore {
         appsFlyerID = this.utils.generateUUIDv4();
       }
       this.appsFlyerID = appsFlyerID;
-      this.payload.appsflyer_id = appsFlyerID;
-      // this.payload.device_ids.push({type: 'custom', value: appsFlyerID});
+      // this.payload.appsflyer_id = appsFlyerID;
+      this.payload.device_ids.push({type: 'custom', value: appsFlyerID});
     };   
 
     this.setSessionCount = function setSessionCount() {
@@ -98,49 +98,49 @@ class AppsFlyerCore {
   }
   // init API sets appsFlyerOptions, sessionCount and AppsFlyer ID
   async init(config, platformPayload, platformLogs) {
-    const appId = config.appId;
-    const devKey = config.devKey;
-    let isDebug = false;
-    let isSandbox = false;
+      const appId = config.appId;
+      const devKey = config.devKey;
+      let isDebug = false;
+      let isSandbox = false;
 
-    if (this.utils.isBooleanTrue(config.isDebug)) {
-      isDebug = true;
-    }    
-    if (this.utils.isBooleanTrue(config.isSandbox)) {
-      isSandbox = true;
-    }
-
-    this.logger.setDebugMode(isDebug);
-    this.printPlatformLogs(platformLogs);
-
-    try {
-      if (!this.utils.isNumber(appId)) {
-        throw new Error(INVALID_APP_ID);
+      if (this.utils.isBooleanTrue(config.isDebug)) {
+        isDebug = true;
+      }    
+      if (this.utils.isBooleanTrue(config.isSandbox)) {
+        isSandbox = true;
       }
 
-      if (!this.utils.isString(devKey)) {
-        throw new Error(INVALID_DEV_KEY);
+      this.logger.setDebugMode(isDebug);
+      this.printPlatformLogs(platformLogs);
+
+      try {
+        if (!this.utils.isNumber(appId)) {
+          throw new Error(INVALID_APP_ID);
+        }
+
+        if (!this.utils.isString(devKey)) {
+          throw new Error(INVALID_DEV_KEY);
+        }
+      
+        this.appsFlyerOptions.devKey = devKey;
+        this.appsFlyerOptions.appId = appId;
+        this.appsFlyerOptions.isDebug = isDebug;
+        this.appsFlyerOptions.isSandbox = isSandbox;
+
+        this.requests = new Requests(this.utils, this.logger, this.auth, this.storage, isSandbox);
+        this.setPayload(platformPayload.payload);
+        this.setPlatform(platformPayload.platform);
+        this.setAppsFlyerID();
+        this.setSessionCount();
+        this.setRequestID();
+        this.setTimestamp();
+        this.storage.setLocalStorage(this.appsFlyerID, this.sessionCount);
+
+        this.logger.info(APPSFLYER_INITIZALIZED);
+      } catch (err) {
+        this.logger.error(err);
+        throw new Error(err);
       }
-    
-      this.appsFlyerOptions.devKey = devKey;
-      this.appsFlyerOptions.appId = appId;
-      this.appsFlyerOptions.isDebug = isDebug;
-      this.appsFlyerOptions.isSandbox = isSandbox;
-
-      this.requests = new Requests(this.utils, this.logger, this.auth, this.storage, isSandbox);
-      this.setPayload(platformPayload.payload);
-      this.setPlatform(platformPayload.platform);
-      this.setAppsFlyerID();
-      this.setSessionCount();
-      this.setRequestID();
-      this.setTimestamp();
-      this.storage.setLocalStorage(this.appsFlyerID, this.sessionCount);
-
-      this.logger.info(APPSFLYER_INITIZALIZED);
-    } catch (err) {
-      this.logger.error(err);
-      throw new Error(err);
-    }
   }
   // start API send a request to session/first-open endpoint
   start() {

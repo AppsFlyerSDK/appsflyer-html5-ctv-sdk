@@ -103,7 +103,12 @@ let config = {
     isSandbox: false
 }
 
-await appsflyer.init(config);
+appsflyer.init(config)
+    .then((response)=>{
+        console.log("Init API response success: " + response);
+    }).catch((err)=>{
+        console.log("Init API response err: " + err);
+    });
 
 appsflyer.start()
     .then((response)=>{

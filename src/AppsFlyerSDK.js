@@ -6,8 +6,15 @@ import { Platform } from './platforms/types/types.js';
 
 class AppsFlyerSDK {
   constructor() {
-    this.appsflyerInstance = AppsFlyerCore.prototype.getInstance();
-    this.setPlatformInstance();
+    this.chromiumVersion = this.getChromiumVersion()
+    if(this.chromiumVersion > 49){
+      this.appsflyerInstance = AppsFlyerCore.prototype.getInstance();
+      this.setPlatformInstance();
+    }else{
+      console.error("Device OS not supported");
+    }
+    
+    this.isSDKValid = this.appsflyerInstance && this.platformInstance;
   }
 
   setPlatformInstance() {
@@ -22,6 +29,7 @@ class AppsFlyerSDK {
       } else if(typeof VIDAA != 'undefined'){
         platformInstance = new CustomPlatform(Platform.Vidaa);
       } else {
+        // platformInstance = new CustomPlatform(Platform.Smartcast);
         platformInstance = null;
         console.error("No platform found");
       }
@@ -30,39 +38,47 @@ class AppsFlyerSDK {
   }
 
   async init(config) {
-    let platformPayload, platformLogs;
-    if(this.platformInstance){
-      try{
-        platformPayload = await this.platformInstance.getPlatformPayload();
-        platformLogs = this.platformInstance.getPlatformLogs();
-      } catch (error){
-        platformLogs.push(error)
-      }
+    return new Promise(async (resolve, reject) => {
 
-      try{
-        await this.appsflyerInstance.init(config, platformPayload, platformLogs);
-      } catch (error){
-        console.error(error)
+      let platformPayload, platformLogs;
+      if(this.isSDKValid){
+        try{
+          platformPayload = await this.platformInstance.getPlatformPayload();
+          platformLogs = this.platformInstance.getPlatformLogs();
+        } catch (error){
+          platformLogs.push(error)
+        }
+
+        try{
+          await this.appsflyerInstance.init(config, platformPayload, platformLogs);
+          resolve(true)
+        } catch (error){
+          console.error(error)
+          reject(false)
+        } 
       } 
-    } else {
-      console.error("Init failed: No platform found");
-    }  
+    });
   }
 
   start() {   
-    return this.appsflyerInstance.start();
+    return (this.isSDKValid) ? this.appsflyerInstance.start() : null;
   }
   
   logEvent(eventName, eventValue) {
-    return this.appsflyerInstance.logEvent(eventName, eventValue);
+    return (this.isSDKValid) ? this.appsflyerInstance.logEvent(eventName, eventValue) : null;
   }
 
   setCustomPayload(payload) {
-    return this.appsflyerInstance.setCustomPayload(payload);
+    return (this.isSDKValid) ? this.appsflyerInstance.setCustomPayload(payload) : null;
   }
 
   setCustomerUserId(userId) {
-    return this.appsflyerInstance.setCustomerUserId(userId);
+    return (this.isSDKValid) ? this.appsflyerInstance.setCustomerUserId(userId) : null;
+  }
+
+  getChromiumVersion(){
+    var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+    return raw ? parseInt(raw[2], 10) : false;
   }
 }
 

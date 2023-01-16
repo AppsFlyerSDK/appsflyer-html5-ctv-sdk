@@ -4,6 +4,9 @@
 
 **<a id="init"> `init(Object config)`**
 
+Initalization of the SDK 
+
+
 | Setting  | Description   |
 | -------- | ------------- |
 | devKey   | Your application [devKey](https://support.appsflyer.com/hc/en-us/articles/207032066-Basic-SDK-integration-guide#retrieving-the-dev-key) provided by AppsFlyer (required)  |
@@ -11,7 +14,8 @@
 | isDebug    | Show Debug logs - set to `true` for testing only!  |
 | isSandbox    | Send events to sandbox endpoints - set to `true` for testing only!  |
 
-Initalization of the SDK 
+Return values:
+`true` for success and `false` for failure
 
 
 Example:
@@ -24,7 +28,12 @@ let config = {
     isSandbox: false
 }
 
-await appsflyer.init(config);
+appsflyer.init(config)
+    .then((response)=>{
+        console.log("Init API response success: " + response);
+    }).catch((err)=>{
+        console.log("Init API response err: " + err);
+    });
 ```
 
 ## <a id="launch"> Launch event
