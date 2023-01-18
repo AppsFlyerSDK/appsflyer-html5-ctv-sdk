@@ -21,17 +21,17 @@ function main(){
     var appsflyer = AppsFlyerSDK.getInstance();
 
     var config = SAMSUNG_CONFIG;
-    config = LG_CONFIG;
+    // config = LG_CONFIG;
     // config = CUSTOM_CONFIG;
 
     appsflyer.init(config).then(function(response){
         console.log("Init API response success: " + response);
-        var customPayload = {
-            "device_model": "3920X",
-            "device_os_version": "9.3.0",
-            "app_version": "1.0.5",
-            "device_id": "fa73d67d-f55c-5af3-883a-726253dc7d0e",
-        }
+        // var customPayload = {
+        //     "device_model": "3920X",
+        //     "device_os_version": "9.3.0",
+        //     "app_version": "1.0.5",
+        //     "device_id": "fa73d67d-f55c-5af3-883a-726253dc7d0e",
+        // }
         // appsflyer.setCustomPayload(customPayload);
         
         appsflyer.start()
@@ -43,12 +43,12 @@ function main(){
                 console.log("start API response err: " + JSON.stringify(err));
             });
 
-        // appsflyer.logEvent("af_purchase", {"af_revenue" : 1.99, "af_currency": "USD"})
-        //         .then(function(response){
-        //             console.log("logEvent API response success: " + JSON.stringify(response));
-        //         }).catch(function(err){
-        //             console.log("logEvent API response err: " + JSON.stringify(err));
-        //         });    
+        appsflyer.logEvent("af_purchase", {"af_revenue" : 1.99, "af_currency": "USD"})
+                .then(function(response){
+                    console.log("logEvent API response success: " + JSON.stringify(response));
+                }).catch(function(err){
+                    console.log("logEvent API response err: " + JSON.stringify(err));
+                });    
 
     }).catch(function(err){
         alert("init err " + JSON.stringify(err))
