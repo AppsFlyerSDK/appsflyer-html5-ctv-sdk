@@ -4,13 +4,12 @@ import {SAMSUNG_CONFIG, LG_CONFIG, CUSTOM_CONFIG} from './config.js'
 async function main(){
     let appsflyer;
     let response;
-    try{
-        appsflyer = await new AppsFlyerSDK();
+    let config = SAMSUNG_CONFIG;
+    // config = LG_CONFIG;
+    // config = CUSTOM_CONFIG;
 
-        let config = SAMSUNG_CONFIG;
-        // config = LG_CONFIG;
-        // config = CUSTOM_CONFIG;
-        await appsflyer.init(config);
+    try{
+        appsflyer = await new AppsFlyerSDK(config);
     }catch(e){
         console.log(e);
     }  

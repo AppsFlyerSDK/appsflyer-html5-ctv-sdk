@@ -6,8 +6,8 @@ import { Platform } from './platforms/types/types.js';
 import {INVALID_SDK, DEVICE_OS_NOT_SUPPORT, NO_PLATFORM_FOUND} from './core/utils/constants.js';
 
 class AppsFlyerSDK {
-  constructor() {
-    return new Promise( (resolve, reject) => {
+  constructor(config) {
+    return new Promise( async(resolve, reject) => {
 
       if(this.getChromiumVersion() > 49){
         this.appsflyerInstance = AppsFlyerCore.prototype.getInstance();
@@ -20,7 +20,16 @@ class AppsFlyerSDK {
         reject(DEVICE_OS_NOT_SUPPORT);
       }
       
-      this.isSDKValid() ? resolve(this) : reject(INVALID_SDK);
+      if(this.isSDKValid()){
+        try{
+          await this.init(config);
+          resolve(this)
+        }catch(err){
+          reject(err)
+        }
+      }else{
+        reject(INVALID_SDK);
+      }
     });
   }
 
@@ -45,7 +54,6 @@ class AppsFlyerSDK {
   }
 
   async init(config) {
-    return new Promise(async (resolve, reject) => {
 
       let platformPayload, platformLogs;
       if(this.isSDKValid()){
@@ -58,12 +66,10 @@ class AppsFlyerSDK {
 
         try{
           await this.appsflyerInstance.init(config, platformPayload, platformLogs);
-          resolve(true)
         } catch (error){
-          reject(error)
+          throw error
         } 
       } 
-    });
   }
 
   start() {   
@@ -90,10 +96,11 @@ class AppsFlyerSDK {
   isSDKValid(){
     return (this.appsflyerInstance && this.platformInstance) ? true : false;
   }
+  
 }
 
-export function getInstance(){
-  return new AppsFlyerSDK();
+export async function getInstance(config){
+  return new AppsFlyerSDK(config);
 }
 
-export default AppsFlyerSDK;
+export default (config) => new AppsFlyerSDK(config);
