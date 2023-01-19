@@ -14,11 +14,6 @@ Initalization of the SDK
 | isDebug    | Show Debug logs - set to `true` for testing only!  |
 | isSandbox    | Send events to sandbox endpoints - set to `true` for testing only!  |
 
-Return values:
-`true` for success and `false` for failure
-
-
-Example:
 
  ```javascript
 let config = {
@@ -28,12 +23,11 @@ let config = {
     isSandbox: false
 }
 
-appsflyer.init(config)
-    .then((response)=>{
-        console.log("Init API response success: " + response);
-    }).catch((err)=>{
-        console.log("Init API response err: " + err);
-    });
+try{  
+    await appsflyer.init(config);
+}catch(e){
+    console.log(e);
+}  
 ```
 
 ## <a id="launch"> Launch event
@@ -43,15 +37,13 @@ appsflyer.init(config)
 Send session to our servers
 
 
-Example:
-
  ```javascript
-appsflyer.start()
-    .then((response)=>{
-        console.log("start API response success: " + JSON.stringify(response));
-    }).catch((err)=>{
-        console.log("start API response err: " + JSON.stringify(err));
-    });
+try{
+    let response = await appsflyer.start();
+    console.log("start API response success: " + JSON.stringify(response));
+}catch(err){
+    console.log("start API response err: " + JSON.stringify(err));
+}
  ```
 
 
@@ -65,15 +57,14 @@ appsflyer.start()
 
 Send in-app event
 
-Example:
 
  ```javascript
-appsflyer.logEvent("af_purchase", {"af_revenue" : 1.99, "af_currency": "USD"})
-        .then((response)=>{
-            console.log("logEvent API response success: " + JSON.stringify(response));
-        }).catch((err)=>{
-            console.log("logEvent API response err: " + JSON.stringify(err));
-        });  
+    try{
+        let response = await appsflyer.logEvent("af_purchase", {"af_revenue" : 1.99, "af_currency": "USD"})
+        console.log("logEvent API response success: " + JSON.stringify(response));
+    }catch(err){
+        console.log("logEvent API response err: " + JSON.stringify(err));
+    }
  ```
 
 ## <a id="setCustomPayload"> Set custom payload
@@ -82,7 +73,6 @@ appsflyer.logEvent("af_purchase", {"af_revenue" : 1.99, "af_currency": "USD"})
 
 Add custom payload. [You could use it to integrate other platforms](/docs/other-platforms.md)
 
-Example:
 
  ```javascript
     let customPayload = {
@@ -101,7 +91,6 @@ Example:
 
 Add customer user id. This will add `customer_user_id` key to the payload.
 
-Example:
 
  ```javascript
     appsflyer.setCustomerUserId("123");

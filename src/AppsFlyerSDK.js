@@ -3,18 +3,25 @@ import SamsungPlatform from './platforms/samsung/samsung.js';
 import LGPlatform from './platforms/lg/lg.js';
 import CustomPlatform from './platforms/custom/custom.js';
 import { Platform } from './platforms/types/types.js';
+import {INVALID_SDK, DEVICE_OS_NOT_SUPPORT, NO_PLATFORM_FOUND} from './core/utils/constants.js';
 
 class AppsFlyerSDK {
   constructor() {
-    this.chromiumVersion = this.getChromiumVersion()
-    if(this.chromiumVersion > 49){
-      this.appsflyerInstance = AppsFlyerCore.prototype.getInstance();
-      this.setPlatformInstance();
-    }else{
-      console.error("Device OS not supported");
-    }
-    
-    this.isSDKValid = this.appsflyerInstance && this.platformInstance;
+    return new Promise( (resolve, reject) => {
+
+      if(this.getChromiumVersion() > 49){
+        this.appsflyerInstance = AppsFlyerCore.prototype.getInstance();
+        try{
+          this.platformInstance = this.setPlatformInstance();
+        }catch(err){
+          reject(err) 
+        }
+      }else{
+        reject(DEVICE_OS_NOT_SUPPORT);
+      }
+      
+      this.isSDKValid() ? resolve(this) : reject(INVALID_SDK);
+    });
   }
 
   setPlatformInstance() {
@@ -31,17 +38,17 @@ class AppsFlyerSDK {
       } else {
         // platformInstance = new CustomPlatform(Platform.Smartcast);
         platformInstance = null;
-        console.error("No platform found");
+        throw NO_PLATFORM_FOUND;
       }
-      this.platformInstance = platformInstance;
     }
+    return platformInstance;
   }
 
   async init(config) {
     return new Promise(async (resolve, reject) => {
 
       let platformPayload, platformLogs;
-      if(this.isSDKValid){
+      if(this.isSDKValid()){
         try{
           platformPayload = await this.platformInstance.getPlatformPayload();
           platformLogs = this.platformInstance.getPlatformLogs();
@@ -53,32 +60,35 @@ class AppsFlyerSDK {
           await this.appsflyerInstance.init(config, platformPayload, platformLogs);
           resolve(true)
         } catch (error){
-          console.error(error)
-          reject(false)
+          reject(error)
         } 
       } 
     });
   }
 
   start() {   
-    return (this.isSDKValid) ? this.appsflyerInstance.start() : null;
+    return this.isSDKValid() ? this.appsflyerInstance.start() : null;
   }
   
   logEvent(eventName, eventValue) {
-    return (this.isSDKValid) ? this.appsflyerInstance.logEvent(eventName, eventValue) : null;
+    return this.isSDKValid() ? this.appsflyerInstance.logEvent(eventName, eventValue) : null;
   }
 
   setCustomPayload(payload) {
-    return (this.isSDKValid) ? this.appsflyerInstance.setCustomPayload(payload) : null;
+    return this.isSDKValid() ? this.appsflyerInstance.setCustomPayload(payload) : null;
   }
 
   setCustomerUserId(userId) {
-    return (this.isSDKValid) ? this.appsflyerInstance.setCustomerUserId(userId) : null;
+    return this.isSDKValid() ? this.appsflyerInstance.setCustomerUserId(userId) : null;
   }
 
   getChromiumVersion(){
     var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
     return raw ? parseInt(raw[2], 10) : false;
+  }
+
+  isSDKValid(){
+    return (this.appsflyerInstance && this.platformInstance) ? true : false;
   }
 }
 

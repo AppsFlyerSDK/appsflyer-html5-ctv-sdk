@@ -95,7 +95,7 @@ Initialize the SDK to enable AppsFlyer to detect installations, sessions (app op
 ```javascript
 import AppsFlyerSDK from 'appsflyer-html5-ctv-sdk'
 
-let appsflyer = new AppsFlyerSDK();
+let appsflyer;
 let config = {
     devKey: "RxutGo4bSB9MKkM7bMCjHP",
     appId: "3202204027284",
@@ -103,17 +103,17 @@ let config = {
     isSandbox: false
 }
 
-appsflyer.init(config)
-    .then((response)=>{
-        console.log("Init API response success: " + response);
-    }).catch((err)=>{
-        console.log("Init API response err: " + err);
-    });
+try{
+    appsflyer = await new AppsFlyerSDK();
+    await appsflyer.init(config);
+}catch(e){
+    console.log(e);
+}  
 
-appsflyer.start()
-    .then((response)=>{
-        console.log("start API response success: " + JSON.stringify(response));
-    }).catch((err)=>{
-        console.log("start API response err: " + JSON.stringify(err));
-    });
+try{
+    let response = await appsflyer.start();
+    console.log("start API response success: " + JSON.stringify(response));
+}catch(err){
+    console.log("start API response err: " + JSON.stringify(err));
+}
 ```
