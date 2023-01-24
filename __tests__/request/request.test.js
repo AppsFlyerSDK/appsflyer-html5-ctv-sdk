@@ -9,7 +9,7 @@ describe.each(Platforms)("Test endpoints", (config, payload) => {
         global.localStorage.setItem('appsflyer', '{"sessionCount":0,"appsflyerID":""}')
         appId = config.appId;
         platformType = payload.platform;
-        appsflyer = AppsFlyerCore.prototype.getInstance();
+        appsflyer = AppsFlyerCore;
         await appsflyer.init(config, payload);
 
         // define endpoints

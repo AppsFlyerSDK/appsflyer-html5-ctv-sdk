@@ -86,16 +86,7 @@ class AppsFlyerCore {
   setCustomPayload(payload){
     this.setCustomPayload(payload);
   }
-
-  // getInstance API return AppsFlyerCore instance
-  getInstance() {
-    let client = this._instance;
-    if (client === undefined) {
-      client = new AppsFlyerCore();
-      this._instance = client;
-    }
-    return client;
-  }
+  
   // init API sets appsFlyerOptions, sessionCount and AppsFlyer ID
   async init(config, platformPayload, platformLogs) {
       const appId = config.appId;
@@ -242,4 +233,4 @@ class AppsFlyerCore {
 }
 
 
-export default AppsFlyerCore;
+export default new AppsFlyerCore();

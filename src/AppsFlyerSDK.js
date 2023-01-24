@@ -1,18 +1,20 @@
 import AppsFlyerCore from './core/AppsFlyerCore.js';
 import SamsungPlatform from './platforms/samsung/samsung.js';
 import LGPlatform from './platforms/lg/lg.js';
-import CustomPlatform from './platforms/custom/custom.js';
-import { Platform } from './platforms/types/types.js';
+import Vizio from './platforms/custom/vizio.js';
+import Vidaa from './platforms/custom/vidaa.js';
 import {INVALID_SDK, DEVICE_OS_NOT_SUPPORT, NO_PLATFORM_FOUND} from './core/utils/constants.js';
+
+const PLATFORM_MAPPING = [SamsungPlatform, LGPlatform, Vizio, Vidaa]
 
 class AppsFlyerSDK {
   constructor() {
     return new Promise( (resolve, reject) => {
 
       if(this.getChromiumVersion() > 49){
-        this.appsflyerInstance = AppsFlyerCore.prototype.getInstance();
+        this.appsflyerInstance = AppsFlyerCore;
         try{
-          this.platformInstance = this.setPlatformInstance();
+          this.setPlatformInstance();
         }catch(err){
           reject(err) 
         }
@@ -25,23 +27,18 @@ class AppsFlyerSDK {
   }
 
   setPlatformInstance() {
-    let platformInstance;
-    if (platformInstance === undefined) {
-      if (typeof tizen != 'undefined' && tizen.application) {
-        platformInstance = new SamsungPlatform();
-      } else if (typeof webOS != 'undefined' && webOS.fetchAppInfo && webOS.platform.tv) {
-        platformInstance = new LGPlatform();
-      } else if(typeof VIZIO != 'undefined'){
-        platformInstance = new CustomPlatform(Platform.Smartcast);
-      } else if(typeof VIDAA != 'undefined'){
-        platformInstance = new CustomPlatform(Platform.Vidaa);
-      } else {
-        // platformInstance = new CustomPlatform(Platform.Smartcast);
-        platformInstance = null;
-        throw NO_PLATFORM_FOUND;
-      }
+    const isDefined = x => x!= undefined;
+    const availablePlatforms = [(window.tizen && tizen.application), (window.webOS && webOS.fetchAppInfo && webOS.platform.tv), window.VISIO, window.VIDAA];
+    const plafromIndex = availablePlatforms.map(p => isDefined(p)).findIndex(p => p == true);
+
+    if(plafromIndex !== -1){
+      const platformFactory = PLATFORM_MAPPING[plafromIndex];
+      this.platformInstance = new platformFactory();
+    }else{
+      // this.platformInstance = new Vizio();
+      this.platformInstance = null;
+      throw NO_PLATFORM_FOUND;
     }
-    return platformInstance;
   }
 
   async init(config) {

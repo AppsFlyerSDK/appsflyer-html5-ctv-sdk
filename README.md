@@ -13,8 +13,10 @@
 ### <a id="plugin-build-for"> This SDK is built for
 
 - <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/tizen.png?raw=true" alt="drawing" width="15"/> Samsung Tizen
-- <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/lg.png?raw=true" alt="drawing" width="15"/> LG Webos
-- VIZIO & Vidaa. [Check the implementation guide for these specific platforms here](/docs/other-platforms.md)
+- <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/lg.png?raw=true" alt="drawing" width="15"/> LG Webos (Webos 4 & above)
+- VIZIO & Vidaa. [Please follow the implementation guide](/docs/other-platforms.md)
+
+
  ##  📖 Guides
 - [Adding the SDK to your project](#installation)
     - [Yarn](#yarn)
