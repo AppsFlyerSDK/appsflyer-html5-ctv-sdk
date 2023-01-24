@@ -1,8 +1,8 @@
 # <a id="other-platforms"> 📑 API
 
-## <a id="init"> Init
+## <a id="newAppsflyerSdk"> AppsFlyerSDK Initialization
 
-**<a id="init"> `init(Object config)`**
+**<a id="newAppsflyerSdk"> `await new AppsFlyerSDK(Object config)`**
 
 Initalization of the SDK 
 
@@ -16,15 +16,16 @@ Initalization of the SDK
 
 
  ```javascript
+let appsflyer;
 let config = {
     devKey: "RxutGo4bSB9MKkM7bMCjHP",
     appId: "3202204027284",
     isDebug: true, 
     isSandbox: false
-}
+};
 
 try{  
-    await appsflyer.init(config);
+    appsflyer = await new AppsFlyerSDK(config);
 }catch(e){
     console.log(e);
 }  
@@ -95,3 +96,24 @@ Add customer user id. This will add `customer_user_id` key to the payload.
  ```javascript
     appsflyer.setCustomerUserId("123");
  ```
+
+ ## <a id="init"> Init (Deprecated!)
+
+**<a id="init"> `init(Object config)`**
+
+Please use `await new AppsFlyerSDK(config)` instead.
+
+ ```javascript
+let config = {
+    devKey: "RxutGo4bSB9MKkM7bMCjHP",
+    appId: "3202204027284",
+    isDebug: true, 
+    isSandbox: false
+}
+
+try{  
+    await appsflyer.init(config);
+}catch(e){
+    console.log(e);
+}  
+```

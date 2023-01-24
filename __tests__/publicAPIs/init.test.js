@@ -30,7 +30,7 @@ const dataSetBadInputs = [
 
 describe.each(Platforms)("Init API", (config, payload) => {
     beforeAll(async () => {
-        appsflyer = AppsFlyerCore.prototype.getInstance();
+        appsflyer = AppsFlyerCore;
         await appsflyer.init(config, payload);
     })
 
@@ -48,7 +48,7 @@ describe.each(Platforms)("Init API", (config, payload) => {
 
 describe("Init wrong config", (_, payload) => {
     beforeAll(async () => {
-        appsflyer = AppsFlyerCore.prototype.getInstance();
+        appsflyer = AppsFlyerCore;
     })
 
     it.each(dataSetBadInputs)("Bad inputs", async (config, expectedErr) => {

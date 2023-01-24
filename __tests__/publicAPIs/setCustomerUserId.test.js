@@ -16,7 +16,7 @@ const dataSet = [
 
 describe.each(Platforms)("setCustomerUserId API ", (config, payload) => {
     beforeAll(async () => {
-        appsflyer = AppsFlyerCore.prototype.getInstance();
+        appsflyer = AppsFlyerCore;
         await appsflyer.init(config, payload);
     })
 

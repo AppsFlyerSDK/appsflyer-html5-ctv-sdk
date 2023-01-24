@@ -13,8 +13,10 @@
 ### <a id="plugin-build-for"> This SDK is built for
 
 - <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/tizen.png?raw=true" alt="drawing" width="15"/> Samsung Tizen
-- <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/lg.png?raw=true" alt="drawing" width="15"/> LG Webos
-- VIZIO & Vidaa. [Check the implementation guide for these specific platforms here](/docs/other-platforms.md)
+- <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/lg.png?raw=true" alt="drawing" width="15"/> LG Webos (Webos 4 & above)
+- VIZIO & Vidaa. [Please follow the implementation guide](/docs/other-platforms.md)
+
+
  ##  📖 Guides
 - [Adding the SDK to your project](#installation)
     - [Yarn](#yarn)
@@ -25,11 +27,12 @@
 - [Support for other platforms](/docs/other-platforms.md)
 - [Basic implemantation of the SDK](#integration)
 - [API](/docs/api.md)
-    - [Init](/docs/api.md#init)
+    - [AppsFlyerSDK initialization](/docs/api.md#newAppsflyerSdk)
     - [Start](/docs/api.md#start)
     - [In-app events](/docs/api.md#inappevents)
     - [Set custom payload](/docs/api.md#setCustomPayload)
     - [Set customer user Id](/docs/api.md#setCustomerUserId)
+    - [Init (Deprecated!)](/docs/api.md#init)
 - [Testing the integration](/docs/testing.md)
     - [Logs](/docs/testing.md#logs)
     - [Response codes](/docs/testing.md#response-codes)
@@ -104,10 +107,9 @@ let config = {
 }
 
 try{
-    appsflyer = await new AppsFlyerSDK();
-    await appsflyer.init(config);
+    appsflyer = await new AppsFlyerSDK(config);
 }catch(e){
-    console.log(e);
+    console.log("AppsFlyerSDK initialization failed. Error " + e);
 }  
 
 try{

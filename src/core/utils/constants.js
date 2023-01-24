@@ -14,6 +14,7 @@ export const APPSFLYER_PREDEFINED_EVENTS_ARR = ["af_revenue", "af_price", "af_cu
 export const INVALID_APP_ID = 'Invalid appId!';
 export const INVALID_DEV_KEY = 'Invalid devKey!';
 export const INVALID_SDK = 'Invalid AppsFlyer SDK';
+export const INVALID_CONFIG = 'Invalid Config file';
 export const DEVICE_OS_NOT_SUPPORT = 'Device OS not supported';
 export const NO_PLATFORM_FOUND = 'No platform found';
 

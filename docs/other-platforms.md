@@ -30,8 +30,7 @@ let config = {
 }
 
 try{
-    appsflyer = await new AppsFlyerSDK();
-    await appsflyer.init(config);
+    appsflyer = await new AppsFlyerSDK(config);
 }catch(e){
     console.log(e);
 }  

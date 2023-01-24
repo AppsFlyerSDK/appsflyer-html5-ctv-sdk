@@ -3,7 +3,7 @@ import {Logger} from './utils/logger.js';
 import {Auth} from './internal/auth/utils.js';
 import {Requests} from './internal/http/requests.js';
 import {LocalStorage} from './internal/storage/storage.js';
-import {APPSFLYER_INITIZALIZED, APPSFLYER_PREDEFINED_EVENTS, APPSFLYER_PREDEFINED_EVENTS_ARR, INVALID_APP_ID, INVALID_DEV_KEY, LOG_EVENT, START, CUSTOMER_USER_ID, DEVICE_ID} from './utils/constants.js';
+import {APPSFLYER_INITIZALIZED, APPSFLYER_PREDEFINED_EVENTS, APPSFLYER_PREDEFINED_EVENTS_ARR, INVALID_APP_ID, INVALID_DEV_KEY, LOG_EVENT, START, CUSTOMER_USER_ID, DEVICE_ID, INVALID_CONFIG} from './utils/constants.js';
 
 // AppsFlyerCore constructor and setters methods
 class AppsFlyerCore {
@@ -86,18 +86,10 @@ class AppsFlyerCore {
   setCustomPayload(payload){
     this.setCustomPayload(payload);
   }
-
-  // getInstance API return AppsFlyerCore instance
-  getInstance() {
-    let client = this._instance;
-    if (client === undefined) {
-      client = new AppsFlyerCore();
-      this._instance = client;
-    }
-    return client;
-  }
+  
   // init API sets appsFlyerOptions, sessionCount and AppsFlyer ID
   async init(config, platformPayload, platformLogs) {
+    if(config != undefined && typeof config === 'object' && Object.keys(config).length !== 0){
       const appId = config.appId;
       const devKey = config.devKey;
       let isDebug = false;
@@ -141,6 +133,7 @@ class AppsFlyerCore {
         this.logger.error(err);
         throw new Error(err);
       }
+    }
   }
   // start API send a request to session/first-open endpoint
   start() {
@@ -242,4 +235,4 @@ class AppsFlyerCore {
 }
 
 
-export default AppsFlyerCore;
+export default new AppsFlyerCore();

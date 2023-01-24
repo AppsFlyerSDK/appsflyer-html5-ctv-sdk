@@ -2,20 +2,14 @@ import {PlatformPayload} from '../platformPayload.js';
 import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from '../types/constants.js';
 import {DeviceIds, Platform} from '../types/types.js';
 
-class LGPlatform {
+class LG {
   constructor(){
     this.platformLogs = [];
   }
   async getPlatformPayload() {
       let lgPlatformPayload = PlatformPayload(Platform.Webos);
-      let lgUdid;
-      if (typeof webOS != 'undefined' && webOS.fetchAppInfo && webOS.platform.tv) {
         try {
-          lgUdid = await this.getLGUDID()
-          // if the device is a simulator, device ID should be zeros
-          if(lgUdid.includes("simulator")){
-            lgUdid = DEFAULT_DEVICE_ID
-          }
+          const lgUdid = await this.getLGUDID()
           lgPlatformPayload.payload.device_ids.push({type: DeviceIds.Lgudid, value: lgUdid});
         } catch (error) {
           this.platformLogs.push(error);
@@ -30,15 +24,14 @@ class LGPlatform {
         }
 
         try {
-          let app_version = await this.getAppVersion();
-          lgPlatformPayload.payload.app_version = app_version;
+          lgPlatformPayload.payload.app_version = await this.getAppVersion();
         } catch (error) {
           lgPlatformPayload.payload.app_version = DEFAULT_APP_VERSION;
           this.platformLogs.push(error);
         }
 
         return lgPlatformPayload;
-      }
+
   }
   getPlatformLogs() {
     return this.platformLogs;
@@ -100,6 +93,10 @@ class LGPlatform {
     
           if (isSucceeded){
             let lgUdid = String(response.idList[0].idValue);
+            // if the device is a simulator, device ID should be zeros
+            if(lgUdid.includes("simulator")){
+              lgUdid = DEFAULT_DEVICE_ID
+            }
             resolve(lgUdid);
           }
         },
@@ -111,4 +108,4 @@ class LGPlatform {
   }
 }
 
-export default LGPlatform;
+export default LG;

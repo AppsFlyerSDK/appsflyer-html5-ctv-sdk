@@ -10,6 +10,8 @@ async function main(){
 
     try{
         appsflyer = await new AppsFlyerSDK(config);
+        // appsflyer = await new AppsFlyerSDK();
+        // await appsflyer.init(config);
     }catch(e){
         console.log(e);
     }  

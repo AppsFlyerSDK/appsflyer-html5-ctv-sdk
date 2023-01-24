@@ -8,7 +8,7 @@ jest.setTimeout(7000)
 describe.each(Platforms)("Start API", (config, payload) => {
     beforeAll(async () => {
         fetch.resetMocks();
-        appsflyer = AppsFlyerCore.prototype.getInstance();
+        appsflyer = AppsFlyerCore;
         await appsflyer.init(config, payload);
     })
 
