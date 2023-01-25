@@ -19,11 +19,11 @@ export class Utils {
       return !(typeof (s) === 'string') || !(this.isEmptyString(s));
     };  
     
-    this.isBooleanTrue = function isString(b) {
+    this.isBooleanTrue = function isBooleanTrue(b) {
       return (b === true && typeof (b) === 'boolean');
     };  
 
-    this.isEmptyJSON = function isString(obj) {
+    this.isEmptyJSON = function isEmptyJSON(obj) {
       return (obj && Object.keys(obj).length === 0 && Object.getPrototypeOf(obj) === Object.prototype);
     };
 

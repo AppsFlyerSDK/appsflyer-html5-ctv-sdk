@@ -106,7 +106,7 @@ class AppsFlyerCore {
       this.printPlatformLogs(platformLogs);
 
       try {
-        if (!this.utils.isNumber(appId)) {
+        if (!this.utils.isString(appId)) {
           throw new Error(INVALID_APP_ID);
         }
 
