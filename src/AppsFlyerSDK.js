@@ -40,23 +40,27 @@ class AppsFlyerSDK {
   }
 
   async init(config) {
-    let platformPayload, platformLogs;
-    if(this.isSDKValid()){
-      try{
-        platformPayload = await this.platformInstance.getPlatformPayload();
-        platformLogs = this.platformInstance.getPlatformLogs();
-      } catch (error){
-        platformLogs.push(error)
-      }
+    return new Promise( async(resolve, reject) => {
 
-      try{
-        await this.appsflyerInstance.init(config, platformPayload, platformLogs);
-      } catch (error){
-        throw error
+      let platformPayload, platformLogs;
+      if(this.isSDKValid()){
+        try{
+          platformPayload = await this.platformInstance.getPlatformPayload();
+          platformLogs = this.platformInstance.getPlatformLogs();
+        } catch (error){
+          platformLogs.push(error)
+        }
+
+        try{
+          await this.appsflyerInstance.init(config, platformPayload, platformLogs);
+          resolve(true)
+        } catch (error){
+          reject(error)
+        } 
+      }else{
+        reject(INVALID_SDK);
       } 
-    }else{
-      throw INVALID_SDK;
-    } 
+    });
   }
 
   start() {   
