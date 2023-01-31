@@ -1,4 +1,4 @@
-import {Platform} from '../types/types.js';
+import {Platform} from './utils/types.js';
 import CustomPlatform from './custom.js';
 
 class Vidaa extends CustomPlatform {

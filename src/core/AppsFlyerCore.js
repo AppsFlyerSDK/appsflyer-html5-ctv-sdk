@@ -88,7 +88,7 @@ class AppsFlyerCore {
   }
   
   // init API sets appsFlyerOptions, sessionCount and AppsFlyer ID
-  async init(config, platformPayload, platformLogs) {
+  async init(config, platformData, platformLogs) {
     if(config != undefined && typeof config === 'object' && Object.keys(config).length !== 0){
       const appId = config.appId;
       const devKey = config.devKey;
@@ -120,8 +120,8 @@ class AppsFlyerCore {
         this.appsFlyerOptions.isSandbox = isSandbox;
 
         this.requests = new Requests(this.utils, this.logger, this.auth, this.storage, isSandbox);
-        this.setPayload(platformPayload.payload);
-        this.setPlatform(platformPayload.platform);
+        this.setPayload(platformData.payload);
+        this.setPlatform(platformData.platform);
         this.setAppsFlyerID();
         this.setSessionCount();
         this.setRequestID();

@@ -1,29 +1,29 @@
-import {PlatformPayload} from '../platformPayload.js';
-import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from '../types/constants.js';
-import {DeviceIds, Platform} from '../types/types.js';
+import {platformData} from './utils/platformData.js';
+import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from './utils/constants.js';
+import {DeviceIds, Platform} from './utils/types.js';
 
 class Samsung {
   constructor(){
     this.platformLogs = [];
   }
-  async getPlatformPayload() {
-    let samsungPlatformPayload = PlatformPayload(Platform.Tizen);
+  async getPlatformData() {
+    let data = platformData(Platform.Tizen);
     
-    samsungPlatformPayload.payload.app_version = await this.getAppVersion();
+    data.payload.app_version = await this.getAppVersion();
     const limitAdTracking = await this.getIsLATEnabled();
-    samsungPlatformPayload.payload.limit_ad_tracking = limitAdTracking
+    data.payload.limit_ad_tracking = limitAdTracking
 
     if(!limitAdTracking){
       const tifa = await this.getTIFA();
       if(tifa !== undefined){
-        samsungPlatformPayload.payload.device_ids.push({type: DeviceIds.Tifa, value: tifa});
+        data.payload.device_ids.push({type: DeviceIds.Tifa, value: tifa});
       }
     }
     
-    samsungPlatformPayload.payload.device_model = await this.getModel();
-    samsungPlatformPayload.payload.device_os_version = await this.getDeviceOsVersion();
+    data.payload.device_model = await this.getModel();
+    data.payload.device_os_version = await this.getDeviceOsVersion();
 
-    return samsungPlatformPayload;
+    return data;
   }
 
   getPlatformLogs() {

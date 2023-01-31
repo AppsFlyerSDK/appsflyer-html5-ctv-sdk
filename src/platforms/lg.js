@@ -1,36 +1,36 @@
-import {PlatformPayload} from '../platformPayload.js';
-import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from '../types/constants.js';
-import {DeviceIds, Platform} from '../types/types.js';
+import {platformData} from './utils/platformData.js';
+import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from './utils/constants.js';
+import {DeviceIds, Platform} from './utils/types.js';
 
 class LG {
   constructor(){
     this.platformLogs = [];
   }
-  async getPlatformPayload() {
-      let lgPlatformPayload = PlatformPayload(Platform.Webos);
+  async getPlatformData() {
+      let data = platformData(Platform.Webos);
         try {
           const lgUdid = await this.getLGUDID()
-          lgPlatformPayload.payload.device_ids.push({type: DeviceIds.Lgudid, value: lgUdid});
+          data.payload.device_ids.push({type: DeviceIds.Lgudid, value: lgUdid});
         } catch (error) {
           this.platformLogs.push(error);
         }
 
         try {
           let deviceData = await this.getWebosData();
-          lgPlatformPayload.payload.device_model = deviceData.device_model;
-          lgPlatformPayload.payload.device_os_version = deviceData.device_os_version;
+          data.payload.device_model = deviceData.device_model;
+          data.payload.device_os_version = deviceData.device_os_version;
         } catch (error) {
           this.platformLogs.push(error);
         }
 
         try {
-          lgPlatformPayload.payload.app_version = await this.getAppVersion();
+          data.payload.app_version = await this.getAppVersion();
         } catch (error) {
-          lgPlatformPayload.payload.app_version = DEFAULT_APP_VERSION;
+          data.payload.app_version = DEFAULT_APP_VERSION;
           this.platformLogs.push(error);
         }
 
-        return lgPlatformPayload;
+        return data;
 
   }
   getPlatformLogs() {

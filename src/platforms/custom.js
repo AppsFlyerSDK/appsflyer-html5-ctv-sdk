@@ -1,13 +1,13 @@
-import {PlatformPayload} from '../platformPayload.js';
-import {Platform, DeviceIds} from '../types/types.js';
+import {platformData} from './utils/platformData.js';
+import {Platform, DeviceIds} from './utils/types.js';
 
 class CustomPlatform {
   constructor(platform){
     this.platform = platform;
     this.platformLogs = [];
   }
-  async getPlatformPayload() {
-    let platformPayload = PlatformPayload(this.platform);
+  async getPlatformData() {
+    let data = platformData(this.platform);
     let idType;
     
     switch(this.platform){
@@ -21,8 +21,8 @@ class CustomPlatform {
         idType = DeviceIds.Custom;
     }
 
-    platformPayload.payload.device_ids.push({type: idType, value: ""});
-    return platformPayload;
+    data.payload.device_ids.push({type: idType, value: ""});
+    return data;
   }
 
   getPlatformLogs() {

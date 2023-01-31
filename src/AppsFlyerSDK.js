@@ -1,10 +1,10 @@
 import AppsFlyerCore from './core/AppsFlyerCore.js';
-import Samsung from './platforms/samsung/samsung.js';
-import LG from './platforms/lg/lg.js';
-import Vizio from './platforms/custom/vizio.js';
-import Vidaa from './platforms/custom/vidaa.js';
+import Samsung from './platforms/samsung.js';
+import LG from './platforms/lg.js';
+import Vizio from './platforms/vizio.js';
+import Vidaa from './platforms/vidaa.js';
 import {INVALID_SDK, DEVICE_OS_NOT_SUPPORT, NO_PLATFORM_FOUND} from './core/utils/constants.js';
-import {Platform} from './platforms/types/types.js';
+import {Platform} from './platforms/utils/types.js';
 import semver from 'semver';
 
 const PLATFORM_MAPPING = [Samsung, LG, Vizio, Vidaa]
@@ -42,18 +42,18 @@ class AppsFlyerSDK {
 
   async init(config) {
     return new Promise( async(resolve, reject) => {
-      let platformPayload, platformLogs;
+      let platformData, platformLogs;
       if(this.isSDKValid()){
         try{
-          platformPayload = await this.platformInstance.getPlatformPayload();
+          platformData = await this.platformInstance.getPlatformData();
           platformLogs = this.platformInstance.getPlatformLogs();
         } catch (error){
           platformLogs.push(error)
         }
-        const isVersionValid = await this.validateOSVersion(platformPayload.platform, platformPayload.payload.device_os_version)
+        const isVersionValid = await this.validateOSVersion(platformData.platform, platformData.payload.device_os_version)
         if(isVersionValid){
           try{
-            await this.appsflyerInstance.init(config, platformPayload, platformLogs);
+            await this.appsflyerInstance.init(config, platformData, platformLogs);
             resolve(true)
           } catch (error){
             reject(error)

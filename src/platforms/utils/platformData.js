@@ -1,4 +1,4 @@
-export let PlatformPayload = function PlatformPayload(platform) {
+export let platformData = (platform) => {
   return {
     platform: platform,
     payload: {
