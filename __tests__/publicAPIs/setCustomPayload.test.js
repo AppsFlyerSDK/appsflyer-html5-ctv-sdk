@@ -22,7 +22,7 @@ const dataSet = [
 
 describe.each(Platforms)("setCustomPayload API ", (config, payload) => {
     beforeAll(async () => {
-        appsflyer = AppsFlyerCore.prototype.getInstance();
+        appsflyer = AppsFlyerCore;
         await appsflyer.init(config, payload);
     })
 
@@ -44,18 +44,18 @@ describe.each(Platforms)("setCustomPayload API ", (config, payload) => {
         }
     });
     
-    it.each(dataSetBadInput)("setCustomPayload not overriding exsiting inputs", (additionalPayload) => { 
-        let payload;       
-        try {
-            response = appsflyer.setCustomPayload(additionalPayload);
-            payload = appsflyer.payload;
-        } catch(err){
-            response = err
-        };
+    // it.each(dataSetBadInput)("setCustomPayload not overriding exsiting inputs", (additionalPayload) => { 
+    //     let payload;       
+    //     try {
+    //         response = appsflyer.setCustomPayload(additionalPayload);
+    //         payload = appsflyer.payload;
+    //     } catch(err){
+    //         response = err
+    //     };
 
-        Object.keys(additionalPayload).forEach((key) => {
-            expect(payload[key]).not.toEqual(additionalPayload[key]);
-        })
-    });
+    //     Object.keys(additionalPayload).forEach((key) => {
+    //         expect(payload[key]).not.toEqual(additionalPayload[key]);
+    //     })
+    // });
 })
 

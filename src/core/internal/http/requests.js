@@ -105,8 +105,12 @@ export class Requests {
 
     this.postJson = async function(devKey, body) {
       const bodyString = JSON.stringify(body);
-      const signature = await this.auth.generateSignature(devKey, bodyString);
-
+      let signature;
+      try{
+        signature = await this.auth.generateSignature(devKey, bodyString);
+      }catch(e){
+        throw new Error("Device OS is not supported")
+      }
       const options = {
         method: 'POST',
         headers: {
@@ -116,7 +120,6 @@ export class Requests {
         },
         body: bodyString,
       };
-
       return options;
     };
 

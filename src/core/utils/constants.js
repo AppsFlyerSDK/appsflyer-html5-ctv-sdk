@@ -4,6 +4,7 @@ export const APPSFLYER = 'appsflyer';
 export const START = 'start';
 export const LOG_EVENT = 'logEvent';
 export const CUSTOMER_USER_ID = 'customer_user_id';
+export const DEVICE_ID = 'device_id';
 
 // log events
 export const APPSFLYER_PREDEFINED_EVENTS = {Revenue: "af_revenue", Price: "af_price", Currency: "af_currency", Duration: "af_duration_seconds"};
@@ -12,6 +13,10 @@ export const APPSFLYER_PREDEFINED_EVENTS_ARR = ["af_revenue", "af_price", "af_cu
 // errors
 export const INVALID_APP_ID = 'Invalid appId!';
 export const INVALID_DEV_KEY = 'Invalid devKey!';
+export const INVALID_SDK = 'Invalid AppsFlyer SDK';
+export const INVALID_CONFIG = 'Invalid Config file';
+export const DEVICE_OS_NOT_SUPPORT = 'Device OS not supported';
+export const NO_PLATFORM_FOUND = 'No platform found';
 
 // events
 export const APPSFLYER_INITIZALIZED = 'AppsFlyer SDK initialized!';

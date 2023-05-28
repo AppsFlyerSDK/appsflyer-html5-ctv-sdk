@@ -1,5 +1,5 @@
 export const MOCK_SUCCESS_RESPONSE = {
-    "message": "Request Succeed",
+    "message": "Success",
     "status": 200,
 }
 export const MOCK_FAILED_RESPONSE = {

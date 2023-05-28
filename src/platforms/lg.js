@@ -1,44 +1,37 @@
-import {PlatformPayload} from '../platformPayload.js';
-import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from '../types/constants.js';
-import {DeviceIds, Platform} from '../types/types.js';
+import {platformData} from './utils/platformData.js';
+import {DEFAULT_DEVICE_ID, DEFAULT_APP_VERSION} from './utils/constants.js';
+import {DeviceIds, Platform} from './utils/types.js';
 
-class AppsFlyerLGSDK {
+class LG {
   constructor(){
     this.platformLogs = [];
   }
-  async getPlatformPayload() {
-      let lgPlatformPayload = PlatformPayload(Platform.Webos);
-      let lgUdid;
-      if (typeof webOS != 'undefined' && webOS.fetchAppInfo && webOS.platform.tv) {
+  async getPlatformData() {
+      let data = platformData(Platform.Webos);
         try {
-          lgUdid = await this.getLGUDID()
-          // if the device is a simulator, device ID should be zeros
-          if(lgUdid.includes("simulator")){
-            lgUdid = DEFAULT_DEVICE_ID
-          }
-          lgPlatformPayload.payload.device_ids.push({type: DeviceIds.Lgudid, value: lgUdid});
+          const lgUdid = await this.getLGUDID()
+          data.payload.device_ids.push({type: DeviceIds.Lgudid, value: lgUdid});
         } catch (error) {
           this.platformLogs.push(error);
         }
 
         try {
           let deviceData = await this.getWebosData();
-          lgPlatformPayload.payload.device_model = deviceData.device_model;
-          lgPlatformPayload.payload.device_os_version = deviceData.device_os_version;
+          data.payload.device_model = deviceData.device_model;
+          data.payload.device_os_version = deviceData.device_os_version;
         } catch (error) {
           this.platformLogs.push(error);
         }
 
         try {
-          let app_version = await this.getAppVersion();
-          lgPlatformPayload.payload.app_version = app_version;
+          data.payload.app_version = await this.getAppVersion();
         } catch (error) {
-          lgPlatformPayload.payload.app_version = DEFAULT_APP_VERSION;
+          data.payload.app_version = DEFAULT_APP_VERSION;
           this.platformLogs.push(error);
         }
 
-        return lgPlatformPayload;
-      }
+        return data;
+
   }
   getPlatformLogs() {
     return this.platformLogs;
@@ -100,6 +93,10 @@ class AppsFlyerLGSDK {
     
           if (isSucceeded){
             let lgUdid = String(response.idList[0].idValue);
+            // if the device is a simulator, device ID should be zeros
+            if(lgUdid.includes("simulator")){
+              lgUdid = DEFAULT_DEVICE_ID
+            }
             resolve(lgUdid);
           }
         },
@@ -111,4 +108,4 @@ class AppsFlyerLGSDK {
   }
 }
 
-export default AppsFlyerLGSDK;
+export default LG;
