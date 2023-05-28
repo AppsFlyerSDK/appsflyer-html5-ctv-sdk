@@ -1,6 +1,6 @@
 {
   "name": "appsflyer-html5-ctv-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AppsFlyer SDK for TV application",
   "type": "module",
   "directories": {
