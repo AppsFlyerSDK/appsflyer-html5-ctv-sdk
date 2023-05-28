@@ -20,7 +20,7 @@ var CUSTOM_CONFIG = {
 function main(){
     var config = SAMSUNG_CONFIG;
     // config = LG_CONFIG;
-    // config = CUSTOM_CONFIG;
+    config = CUSTOM_CONFIG;
 
     AppsFlyerSDK.getInstance(config).then(function(appsflyer){
 

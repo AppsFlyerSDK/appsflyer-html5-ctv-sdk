@@ -32,7 +32,6 @@ class AppsFlyerSDK {
         const platformFactory = PLATFORM_MAPPING[plafromIndex];
         this.platformInstance = new platformFactory();
       }else{
-        // this.platformInstance = new Vizio();
         throw NO_PLATFORM_FOUND;
       }
     }catch(e){
