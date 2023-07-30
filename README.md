@@ -91,6 +91,9 @@ In order for the SDK to fetch device data from the relevant platform, make sure 
 <script type="text/javascript" src="[webOSTVjs-1.2.4-directory]"></script>
 ```
 
+### <a id="other"> Other platforms (VIDAA/VIZIO)
+ For VIDAA/VIZIO Please follow [this guide](/docs/other-platforms.md)
+ 
  ## <a id="integration"> 🚀 Basic implemantation of the SDK
 
 Initialize the SDK to enable AppsFlyer to detect installations, sessions (app opens) and updates.<br>
