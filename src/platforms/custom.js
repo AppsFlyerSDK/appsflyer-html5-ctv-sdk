@@ -15,7 +15,7 @@ class CustomPlatform {
         idType = DeviceIds.Vida;  
         break;
       case Platform.Vidaa:
-        idType = DeviceIds.Custom;  
+        idType = DeviceIds.Vidaa;  
         break;
       default:
         idType = DeviceIds.Custom;

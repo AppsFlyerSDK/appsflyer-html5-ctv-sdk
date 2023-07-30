@@ -14,17 +14,17 @@
 
 - <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/tizen.png?raw=true" alt="drawing" width="15"/> Samsung (Tizen 4 & above)
 - <img src="https://github.com/AppsFlyerSDK/AppsFlyerSDK-appsflyer-html5-ctv-sdk/blob/main/images/lg.png?raw=true" alt="drawing" width="15"/> LG (Webos 4 & above)
-- VIZIO & Vidaa. [Please follow the implementation guide](/docs/other-platforms.md)
+- Other platforms (See example for VIZIO (Smartcast) Vidaa (vidaaOS) in the [following implementation guide](/docs/other-platforms.md))
 
 
  ##  📖 Guides
 - [Adding the SDK to your project](#installation)
     - [Yarn](#yarn)
     - [appsflyerSdk.bundle.js](#bundle)
-- [Platforms dependecy](#platform-dependency)
+- [Platforms dependency](#platform-dependency)
     - [Samsung](#samsung)
     - [LG](#lg)
-- [Support for other platforms](/docs/other-platforms.md)
+    - [Other platforms](/docs/other-platforms.md)
 - [Basic implemantation of the SDK](#integration)
 - [API](/docs/api.md)
     - [AppsFlyerSDK initialization](/docs/api.md#newAppsflyerSdk)

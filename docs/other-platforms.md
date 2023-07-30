@@ -1,10 +1,10 @@
 # <a id="other-platforms"> Support for other platforms
 
-AppsFlyerSDK support the following platforms:
-- Vizio
-- Vidaa
+AppsFlyerSDK supports other platforms in addition to the built in support for Samsung & LG. Currently the following additional platforms are supported:
+- Vizio (Smartcast)
+- Vidaa (VidaaOS)
 
-In order to initalized the SDK:
+Please following these steps:
 
 1. Initalize the SDK as explained.
 
