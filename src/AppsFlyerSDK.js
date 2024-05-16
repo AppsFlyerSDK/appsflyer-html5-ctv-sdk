@@ -4,8 +4,9 @@ import LG from './platforms/lg.js';
 import Vizio from './platforms/vizio.js';
 import Vidaa from './platforms/vidaa.js';
 import {INVALID_SDK, DEVICE_OS_NOT_SUPPORT, NO_PLATFORM_FOUND} from './core/utils/constants.js';
+import {MINIMUM_OS_VERSION_SUPPORTED} from './platforms/utils/constants.js';
+import {isVersionGreaterThanOrEqualTo} from './platforms/utils/utils.js';
 import {Platform} from './platforms/utils/types.js';
-import semver from 'semver';
 
 const PLATFORM_MAPPING = [Samsung, LG, Vizio, Vidaa]
 
@@ -81,9 +82,9 @@ class AppsFlyerSDK {
   setCustomerUserId(userId) {
     return this.isSDKValid() ? this.appsflyerInstance.setCustomerUserId(userId) : new Error(INVALID_SDK);
   }
-
+  
   async validateOSVersion(os, osVersion){
-    if((os == Platform.Tizen || os == Platform.Webos) && semver.gte(semver.coerce(osVersion), '4.0.0')){
+    if((os == Platform.Tizen || os == Platform.Webos) && isVersionGreaterThanOrEqualTo(osVersion, MINIMUM_OS_VERSION_SUPPORTED)){
       return true
     }else{
       let raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
