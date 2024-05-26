@@ -1,21 +1,33 @@
 export const isVersionGreaterThanOrEqualTo = (versionA, versionB) => {
-  const normalizeVersion = (v) => v.split('.').map(part => parseInt(part, 10)); // Normalize version string
+    const isValidVersion = (version) => {
+        return version !== null && version !== undefined && version !== "";
+    };
 
-  const partsA = normalizeVersion(versionA);
-  const partsB = normalizeVersion(versionB);
+    if (!isValidVersion(versionA)) {
+        return false;
+    }
 
-  const maxLength = Math.max(partsA.length, partsB.length);
+    const normalizeVersion = (v) => v.split('.').map(part => parseInt(part, 10)); // Normalize version string
 
-  for (let i = 0; i < maxLength; i++) {
-      const partA = partsA[i] || 0; // Use 0 if no more parts in version
-      const partB = partsB[i] || 0; // Use 0 if no more parts in version
+    const compareVersions = (partsA, partsB) => {
+        const maxLength = Math.max(partsA.length, partsB.length);
 
-      if (partA > partB) {
-          return true;
-      } else if (partA < partB) {
-          return false;
-      }
-  }
+        for (let i = 0; i < maxLength; i++) {
+            const partA = partsA[i] || 0; // Use 0 if no more parts in version
+            const partB = partsB[i] || 0; // Use 0 if no more parts in version
 
-  return true; // Versions are equal
+            if (partA > partB) {
+                return true;
+            } else if (partA < partB) {
+                return false;
+            }
+        }
+
+        return true; // Versions are equal
+    };
+
+    const partsA = normalizeVersion(typeof versionA === 'number' ? versionA.toString() : versionA);
+    const partsB = normalizeVersion(versionB);
+
+    return compareVersions(partsA, partsB);
 };
