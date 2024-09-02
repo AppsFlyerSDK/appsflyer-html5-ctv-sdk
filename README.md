@@ -84,7 +84,7 @@ In order for the SDK to fetch device data from the relevant platform, make sure 
 
 ### <a id="lg"> LG
 
-1. Download the [webOSTVjs](https://webostv.developer.lge.com/assets/library/webOSTVjs-v1.2.4.zip) to your project.
+1. Download the [webOSTVjs](https://webostv.developer.lge.com/develop/references/webostvjs-introduction) to your project.
 
 2. Add the following script to your index.html file:
 ```
