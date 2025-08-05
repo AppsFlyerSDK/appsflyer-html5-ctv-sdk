@@ -1,14 +1,15 @@
 export const Platform = {
-    Tizen: "tizen",
-    Webos: "webos",
-    Smartcast: "smartcast", //vizio
-    Vidaa: "vidaa",
-}
+  Tizen: "tizen",
+  Webos: "webos",
+  Smartcast: "smartcast", //vizio
+  Vidaa: "vidaa",
+  Xbox: "xbox",
+};
 
 export const DeviceIds = {
-    Custom: "custom",
-    Rida: "rida",
-    Vida: "vida",
-    Tifa: "tifa",
-    Lgudid: "lgudid",
-}
+  Custom: "custom",
+  Rida: "rida",
+  Vida: "vida",
+  Tifa: "tifa",
+  Lgudid: "lgudid",
+};
