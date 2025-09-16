@@ -133,6 +133,9 @@ class AppsFlyerCore {
         this.logger.error(err);
         throw new Error(err);
       }
+    } else {
+      // Invalid config - throw error
+      throw new Error(INVALID_APP_ID);
     }
   }
   // start API send a request to session/first-open endpoint
