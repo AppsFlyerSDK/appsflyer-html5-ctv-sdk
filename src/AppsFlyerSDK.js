@@ -26,11 +26,10 @@ class AppsFlyerSDK {
 
   setPlatformInstance() {
     try{
-      const isDefined = x => x!= undefined;
       const availablePlatforms = [(window.tizen && tizen.application), (window.webOS && webOS.fetchAppInfo && webOS.platform.tv), isVizio(), isVidaa()];
-      const plafromIndex = availablePlatforms.map(p => isDefined(p)).findIndex(p => p == true);
-      if(plafromIndex !== -1){
-        const platformFactory = PLATFORM_MAPPING[plafromIndex];
+      const platformIndex = availablePlatforms.findIndex(p => !!p);
+      if(platformIndex !== -1){
+        const platformFactory = PLATFORM_MAPPING[platformIndex];
         this.platformInstance = new platformFactory();
       }else{
         throw NO_PLATFORM_FOUND;
