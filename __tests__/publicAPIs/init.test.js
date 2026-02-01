@@ -52,7 +52,7 @@ describe("Init wrong config", (_, payload) => {
     })
 
     it.each(dataSetBadInputs)("Bad inputs", async (config, expectedErr) => {
-        await expect(async () => await appsflyer.init(config, payload)).rejects.toThrowError(expectedErr);
+        await expect(appsflyer.init(config, payload)).rejects.toThrowError(expectedErr);
     });
    
 });

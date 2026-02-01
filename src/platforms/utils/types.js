@@ -9,6 +9,7 @@ export const DeviceIds = {
     Custom: "custom",
     Rida: "rida",
     Vida: "vida",
+    Vidaa: "vidaaid",
     Tifa: "tifa",
     Lgudid: "lgudid",
 }
